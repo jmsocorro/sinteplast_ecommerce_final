@@ -1,5 +1,5 @@
 {
-  "name": "modulos-de-testing-para-proyecto-final",
+  "name": "sinteplast_ecommerce_final",
   "version": "1.0.0",
   "description": "",
   "main": "./src/app.js",
@@ -11,15 +11,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jmsocorro/modulos-de-testing-para-proyecto-final.git"
+    "url": "git+https://github.com/jmsocorro/sinteplast_ecommerce_final.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/jmsocorro/modulos-de-testing-para-proyecto-final.git"
+    "url": "https://github.com/jmsocorro/sinteplast_ecommerce_final.git"
   },
-  "homepage": "https://github.com/jmsocorro/modulos-de-testing-para-proyecto-final.git#readme",
+  "homepage": "https://github.com/jmsocorro/sinteplast_ecommerce_final.git#readme",
   "dependencies": {
     "@faker-js/faker": "^8.0.2",
     "bcrypt": "^5.1.0",
