@@ -4,6 +4,19 @@ import { passportAuthenticateApi } from "../utils.js";
 
 const router = Router();
 
+router.get("/", passportAuthenticateApi("jwt"), (req, res, next) => {
+  if (!req.user) {
+    res.status(400).send({
+      error: "No existe una sesión de usuario activa",
+    });
+  } else if (req.user.role !== "admin") {
+    res.status(401).send({
+      error: "No esta autorizado para esta seccion",
+    });
+  } else {
+    next("route");
+  }
+});
 router.get("/", cartController.getCarts);
 router.get("/:cid", cartController.getCartById);
 router.post("/", cartController.addCart);
@@ -14,10 +27,6 @@ router.post(
     if (!req.user) {
       res.status(400).send({
         error: "No existe una sesión de usuario activa",
-      });
-    } else if (req.user.role === "admin") {
-      res.status(401).send({
-        error: "No esta autorizado para editar productos",
       });
     } else {
       next("route");

@@ -3,7 +3,6 @@ import productController from "../controllers/apiProduct.controller.js";
 import { passportAuthenticateApi } from "../utils.js";
 
 const router = Router();
-
 router.get("/", productController.getProducts);
 router.get("/:id", productController.getProductById);
 router.post("/", passportAuthenticateApi("jwt"), (req, res, next) => {

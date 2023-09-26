@@ -250,3 +250,135 @@ ejemplo de payload
 ```
 
 
+#### Carts router
+
+##### "carts/" [GET]
+
+Muestra una lista de todos los carros para usuarios **admin**
+
+##### "carts/:cid" [GET]
+
+Muestra el carro con el parametro *cid*
+
+##### "carts/" [POST]
+
+Agrega un carro vacio al usuario logueado
+
+##### "carts/:cid/product/:pid" [GET]
+
+Agrega un producto al carro y redirecciona a *carts/:cid*
+El error muestra un mensaje de error en la vista que se encuentra
+
+##### "carts/:cid" [DELETE]
+
+Vacia el carro con el parametro *cid*
+
+Ejemplo de response
+```
+{
+  "acknowledged": true,
+  "modifiedCount": 1,
+  "upsertedId": null,
+  "upsertedCount": 0,
+  "matchedCount": 1
+}
+```
+
+##### "carts/:cid/product/:pid" [DELETE]
+
+Elimina el producto *pid* el carro con el parametro *cid*
+
+Ejemplo de response
+```
+{
+  "acknowledged": true,
+  "modifiedCount": 1,
+  "upsertedId": null,
+  "upsertedCount": 0,
+  "matchedCount": 1
+}
+```
+
+##### "carts/:cid/product/:pid" [PUT]
+
+Actualiza la cantidad del producto *pid* el carro con el parametro *cid*
+
+Ejemplo de payload
+```
+{
+  "qty": 1
+}
+
+```
+Ejemplo de response
+```
+{
+  "acknowledged": true,
+  "modifiedCount": 1,
+  "upsertedId": null,
+  "upsertedCount": 0,
+  "matchedCount": 1
+}
+```
+
+##### "carts/:cid/" [PUT]
+
+Actualiza todos los productos del carro con el parametro *cid*
+
+Ejemplo de payload
+```
+{
+  "products": [
+    {
+      "product": {
+        "_id": "646f88b5d0738d8d23e1798a",
+        "title": "Membrana con Poliuretano",
+        "description": "Impermeabilizante con poliuretano para cubiertas",
+        "category": "Impermeabilizantes",
+        "status": true,
+        "thumbnails": [
+          "membrana-poliuretanica-20kg-02.png"
+        ],
+        "code": "CODX000003",
+        "stock": 1,
+        "price": 1058.17
+      },
+      "quantity": 100
+    },
+    {
+      "product": {
+        "_id": "646f88b5d0738d8d23e179c6",
+        "title": "Adhesivo Impermeable",
+        "description": "Adhesivo para cerámicos, azulejos y piezas de media y alta\nabsorción.",
+        "category": "Adhesivos",
+        "status": true,
+        "thumbnails": [
+          "951.impermeable_bolsa_25kg-03.png"
+        ],
+        "code": "CODX000486",
+        "stock": 90,
+        "price": 5548.72
+      },
+      "quantity": 1
+    }
+  ]
+}
+
+```
+Ejemplo de response
+```
+{
+  "acknowledged": true,
+  "modifiedCount": 1,
+  "upsertedId": null,
+  "upsertedCount": 0,
+  "matchedCount": 1
+}
+```
+
+##### "carts/:cid/purchase" [GET]
+
+Finaliza la compra y envia un email al usuario y redirecciona a *cartpurchase*.
+Los productos sin stock quedan en el carro
+
+
