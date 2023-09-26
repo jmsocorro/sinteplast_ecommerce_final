@@ -1,0 +1,23 @@
+<link rel="stylesheet" href="/css/usersStyles.css" />
+<h2>Reestablecimiento de clave</h2>
+<div class="user reset">
+  {{#if message}}
+    <div class="{{message.type}}">
+      <div class="title">{{message.title}}</div>
+      <div class="text">{{message.text}}</div>
+    </div>
+  {{/if}}
+  <form method="post" action="/reset">
+    <label for="email">Correo electrónico</label>
+    <input name="email" type="email" required />
+    <input type="submit" name="" id="" value="Enviar" />
+  </form>
+
+  <div class="login">
+    <a href="/login">Inicia sesión</a>
+  </div>
+  <div class="register">
+    <p>¿No tenés una cuenta?</p>
+    <a href="/register">Registrate haciendo click aca</a>
+  </div>
+</div>

@@ -1,0 +1,399 @@
+paths:
+  /products/:
+    get:
+      summary: Renderiza una vista con una lista de productos
+      tags:
+        - Products
+      responses:
+        "200":
+          description: La vista se renderizó correctamente
+          content:
+            text/HTML:
+        "400":
+          description: Error de BBDD
+          content:
+            text/HTML:
+  /products/{cid}:
+    get:
+      summary: Renderiza una vista con el producto solicitado
+      tags:
+        - Products
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: id del producto
+      responses:
+        "200":
+          description: La vista se renderizó correctamente
+          content:
+            text/HTML:
+        "404":
+          description: El producto no existe
+          content:
+            text/HTML:
+  /api/products/:
+    get:
+      summary: Devuelve una lista de productos
+      tags:
+        - Products
+      parameters:
+        - name: limit
+          in: query
+          description: Número máximo de productos por página.
+          schema:
+            type: integer
+            minimum: 1
+            default: 10
+        - name: page
+          in: query
+          description: Número de página.
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - name: query
+          in: query
+          description: Búsqueda por categoría del producto.
+          schema:
+            type: string
+          example: {"category":"Aditivos"}
+        - name: sort
+          in: query
+          description: Cambia el orden de la lista entre ASC y DESC.
+          schema:
+            type: string
+      responses:
+        "200":
+          description: La vista se obtuvo correctamente
+          content:
+            application/json:
+              example:
+                status: success
+                payload:
+                  - _id: 646f88b5d0738d8d23e17988
+                    title: Impregnante Hidro-repelente
+                    description: 'Protector para hormigón, piedra y ladrillo'
+                    category: Impermeabilizantes
+                    status: true
+                    thumbnails:
+                      - impregnante-hidrorepelente-20kg-02.png
+                    code: CODX000001
+                    stock: 79
+                    price: 8190.17
+                    id: 646f88b5d0738d8d23e17988
+                  - _id: 646f88b5d0738d8d23e17989
+                    title: Membrana Cementicia
+                    description: Mortero impermeabilizante monocomponente
+                    category: Impermeabilizantes
+                    status: true
+                    thumbnails:
+                      - membrana_cementicia-25kg-02.png
+                    code: CODX000002
+                    stock: 32
+                    price: 5518.38
+                    id: 646f88b5d0738d8d23e17989
+                  - _id: 646f88b5d0738d8d23e1798a
+                    title: Membrana con Poliuretano
+                    description: Impermeabilizante con poliuretano para cubiertas
+                    category: Impermeabilizantes
+                    status: true
+                    thumbnails:
+                      - membrana-poliuretanica-20kg-02.png
+                    code: CODX000003
+                    stock: 1
+                    price: 1058.17
+                    id: 646f88b5d0738d8d23e1798a
+                  - _id: 646f88b5d0738d8d23e1798b
+                    title: Membrana Flexible
+                    description: Mortero Impermeabilizante elástico bicomponente
+                    category: Impermeabilizantes
+                    status: true
+                    thumbnails:
+                      - membraba_flexible-25kg-02.png
+                    code: CODX000004
+                    stock: 11
+                    price: 4586.01
+                    id: 646f88b5d0738d8d23e1798b
+                  - _id: 646f88b5d0738d8d23e1798c
+                    title: Membrana Techos
+                    description: Impermeabilizante acrílico para techados
+                    category: Impermeabilizantes
+                    status: true
+                    thumbnails:
+                      - membrana-techos-20kg-02.png
+                    code: CODX000005
+                    stock: 39
+                    price: 4428.38
+                    id: 646f88b5d0738d8d23e1798c
+                  - _id: 646f88b5d0738d8d23e1798d
+                    title: Adhesivo Epoxi
+                    description: Adhesivo tixotrópico multiuso para la construcción
+                    category: Reparación de hormigón
+                    status: true
+                    thumbnails:
+                      - adhesivo-epoxi-1kg-02.png
+                    code: CODX000006
+                    stock: 62
+                    price: 2128.14
+                    id: 646f88b5d0738d8d23e1798d
+                  - _id: 646f88b5d0738d8d23e1798e
+                    title: Puente de Adherencia
+                    description: Epoxi para la unión estructural de hormigones
+                    category: Reparación de hormigón
+                    status: true
+                    thumbnails:
+                      - puente-de-adherencia-5kg-02.png
+                    code: CODX000007
+                    stock: 39
+                    price: 2973.63
+                    id: 646f88b5d0738d8d23e1798e
+                  - _id: 646f88b5d0738d8d23e1798f
+                    title: Rápida Habilitación
+                    description: Mortero de Reparación de pisos de hormigón
+                    category: Reparación de hormigón
+                    status: true
+                    thumbnails:
+                      - rapida-habilitacion-20kg-02.png
+                    code: CODX000008
+                    stock: 40
+                    price: 8611.2
+                    id: 646f88b5d0738d8d23e1798f
+                  - _id: 646f88b5d0738d8d23e17990
+                    title: Reparación Capa Fina
+                    description: Mortero de Reparación de hormigón en capa fina
+                    category: Reparación de hormigón
+                    status: true
+                    thumbnails:
+                      - reparacion-capa-fina-25kg-02.png
+                    code: CODX000009
+                    stock: 6
+                    price: 5147.86
+                    id: 646f88b5d0738d8d23e17990
+                  - _id: 646f88b5d0738d8d23e17991
+                    title: Reparación Capa Gruesa
+                    description: Mortero de Reparación de hormigón en capa gruesa
+                    category: Reparación de hormigón
+                    status: true
+                    thumbnails:
+                      - reparacion-capa-gruesa-25kg-02.png
+                    code: CODX00000A
+                    stock: 10
+                    price: 2497.25
+                    id: 646f88b5d0738d8d23e17991
+                totalPages: 7
+                prevPage: null
+                nextPage: 2
+                page: 1
+                hasPrevPage: false
+                hasNextPage: true
+                firstLink: null
+                prevLink: null
+                nextLink: products?page=2
+                lastLink: products?page=7
+        "400":
+          description: Error de BBDD
+    post:
+      summary: Agrega un producto a la lista de productos
+      tags:
+        - Products
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                description:
+                  type: string
+                price:
+                  type: number
+                  format: double
+                thumbnails:
+                  type: array
+                  items:
+                    type: string
+                  minItems: 0
+                code:
+                  type: string
+                stock:
+                  type: integer
+                category:
+                  type: string
+                status:
+                  type: boolean
+                  default: true
+      responses:
+        "200":
+          description: El producto fue agregado correctamente
+          content:
+            application/json:
+              example:
+                status: success
+                payload:
+                  - _id: 646f88b5d0738d8d23e17988
+                    title: Impregnante Hidro-repelente
+                    description: 'Protector para hormigón, piedra y ladrillo'
+                    category: Impermeabilizantes
+                    status: true
+                    thumbnails:
+                      - impregnante-hidrorepelente-20kg-02.png
+                    code: CODX000001
+                    stock: 79
+                    price: 8190.17
+                    id: 646f88b5d0738d8d23e17988
+        "401":
+          description: Error de autorización
+          content:
+            application/json:
+              example:
+                error: No esta autorizado para editar productos
+    put:
+      summary: Modifica un producto a la lista de productos
+      tags:
+        - Products
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                description:
+                  type: string
+                price:
+                  type: number
+                  format: double
+                thumbnails:
+                  type: array
+                  items:
+                    type: string
+                  minItems: 0
+                code:
+                  type: string
+                stock:
+                  type: integer
+                category:
+                  type: string
+                status:
+                  type: boolean
+                  default: true
+      responses:
+        "200":
+          description: El producto fue modificado correctamente
+          content:
+            application/json:
+              example:
+                status: success
+                payload:
+                  - _id: 646f88b5d0738d8d23e17988
+                    title: Impregnante Hidro-repelente
+                    description: 'Protector para hormigón, piedra y ladrillo'
+                    category: Impermeabilizantes
+                    status: true
+                    thumbnails:
+                      - impregnante-hidrorepelente-20kg-02.png
+                    code: CODX000001
+                    stock: 79
+                    price: 8190.17
+                    id: 646f88b5d0738d8d23e17988
+        "401":
+          description: Error de autorización
+          content:
+            application/json:
+              example:
+                error: No esta autorizado para editar productos
+  /api/products/{pid}:
+    get:
+      summary: Devuelve el producto solicitado
+      tags:
+        - Products
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: id del producto
+      responses:
+        "200":
+          description: La vista se obtuvo correctamente
+          content:
+            application/json:
+              example:
+                status: success
+                payload:
+                  - _id: 646f88b5d0738d8d23e17988
+                    title: Impregnante Hidro-repelente
+                    description: 'Protector para hormigón, piedra y ladrillo'
+                    category: Impermeabilizantes
+                    status: true
+                    thumbnails:
+                      - impregnante-hidrorepelente-20kg-02.png
+                    code: CODX000001
+                    stock: 79
+                    price: 8190.17
+                    id: 646f88b5d0738d8d23e17988
+        "404":
+          description: El producto no existe
+          content:
+            text/HTML:
+
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        _id: 
+          type: ObjectId
+          description: Mongo Id
+        title: 
+          type: String
+          required: true
+          description: Nombre del producto
+        description: 
+          type: String
+          required: true
+          description: Descripción del producto
+        price: 
+          type: Number
+          required: true
+          description: Precio del producto
+        category:
+          type: String,
+          required: true
+          description: Categoría del producto
+        status:
+          type: Boolean
+          required: true
+          description: Estado del producto
+        thumbnails: 
+          type: Array
+          required: false
+          description: Lista de urls con las imágenes del producto
+        code:
+          type: String
+          required: true
+          description: Código del producto
+        stock: 
+          type: Number
+          required: true
+          description: Stock disponible del producto
+      example:
+        _id: 646f88b5d0738d8d23e17988
+        title: Impregnante Hidro-repelente
+        description: 'Protector para hormigón, piedra y ladrillo'
+        category: Impermeabilizantes
+        status: true
+        thumbnails:
+          - impregnante-hidrorepelente-20kg-02.png
+        code: CODX000001
+        stock: 79
+        price: 8190.17    
+
