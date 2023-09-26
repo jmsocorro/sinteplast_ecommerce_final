@@ -8,7 +8,6 @@ const getCarts = async (req, res) => {
     if (result.error) {
       res.status(400).send(result);
     } else {
-      //res.status(200).send(result);
       res.render("carts", result);
     }
   } catch (err) {
@@ -49,14 +48,24 @@ const addProduct = async (req, res) => {
   try {
     if (newCartProduct.cid === "null" && req.user.cart === null) {
       const newCart = await carro.addCart(req.user._id);
-      console.log(newCart)
+      console.log(newCart);
     } else {
       const result = await carro.addProduct(newCartProduct);
-      if (result.error) {
-        res.status(400).send(result);
+      const updatedcart = await carro.getCartById(newCartProduct.cid);
+      if ("error" in result) {
+        updatedcart.message = {
+          type: "Error",
+          title: "El producto no pudo agregarse al carro.",
+          status: 404,
+        };
       } else {
-        res.status(201).send(result);
+        updatedcart.message = {
+          type: "success",
+          title: "Agregaste un producto a tu carro.",
+          status: 200,
+        };
       }
+      res.status(updatedcart.message.status).render("cart", updatedcart);
     }
   } catch (err) {
     res.status(400).send(err);
@@ -129,11 +138,22 @@ const closeCart = async (req, res) => {
   };
   try {
     const result = await carro.closeCart(cart);
-    if (result.error) {
-      res.status(400).send(result);
+    if ("error" in result) {
+      result.message = {
+        type: "Error",
+        title: "Error al generar el ticket",
+        text: "No pudimos completar la compra vuelve a imtentarlo mas tarde.",
+        status: 404,
+      };
     } else {
-      res.status(201).send(result);
+      result.message = {
+        type: "success",
+        title: "Compra finalizada",
+        text: "Recibirás un email con los detalles de la compra",
+        status: 200,
+      };
     }
+    res.status(result.message.status).render("cartpurchase", result);
   } catch (err) {
     res.status(400).send(err);
   }

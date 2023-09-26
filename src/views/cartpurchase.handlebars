@@ -1,0 +1,12 @@
+<link rel="stylesheet" href="/css/cartsStyles.css" />
+<h2>Carro</h2>
+<div class="cart purchase">
+  {{#if message}}
+    <div class="{{message.type}}">
+      <div class="title">{{message.title}}</div>
+      <div class="text">{{message.text}}</div>
+    </div>
+  {{/if}}
+  <a href="/products/" class="verproducto">Continuar comprando</a>
+
+</div>
