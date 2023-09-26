@@ -215,4 +215,38 @@ ejemplo de respuesta
 }
 ```
 
+##### "/reset" [GET]
+
+Muestra el formulario para pedir el reestablecimiento la clave
+
+##### "/reset" [POST]
+
+Envia un mail al usuario con el token para completar el reestablecimiento y muestra un mensaje a */reset*.
+El error lo devuelve a */reset* con un mensaje de error
+
+ejemplo de payload
+
+```
+{
+  "email": "adminCoder@coder.com",
+}
+```
+##### "/reset/:token" [GET]
+
+Muestra el formulario para reestablecer la clave
+
+##### "/reset/:token" [POST]
+
+Reestablece la clave y redirecciona a */login*.
+El error lo devuelve a */reset/:token* con un mensaje de error
+
+ejemplo de payload
+
+```
+{
+  "email": "adminCoder@coder.com",
+  "password": "adminCod3r123"
+}
+```
+
 

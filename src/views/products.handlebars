@@ -50,15 +50,15 @@
 </div>
 <div class="paginado">
         {{#if productos.hasPrevPage }}
-            <a class="avtive" href='{{productos.firstLink}}'>Primera</a>
-            <a class="active" href='{{productos.prevLink}}'>Anterior</a>
+            <a class="avtive" href='/{{productos.firstLink}}'>Primera</a>
+            <a class="active" href='/{{productos.prevLink}}'>Anterior</a>
         {{else}}
             <a class="disabled">Primera</a>
             <a class="disabled">Anterior</a>
         {{/if}}
         {{#if productos.hasNextPage }}
-            <a class="avtive" href='{{productos.nextLink}}'>Siguiente</a>
-            <a class="active"href='{{productos.lastLink}}'>Ultima</a>
+            <a class="avtive" href='/{{productos.nextLink}}'>Siguiente</a>
+            <a class="active"href='/{{productos.lastLink}}'>Ultima</a>
         {{else}}
             <a class="disabled">Siguiente</a>
             <a class="disabled">Ultima</a>
