@@ -9,10 +9,8 @@ const getUsers = async (req, res) => {
   let { limit = 10, page = 1, query, sort } = req.query;
   try {
     const users = await user.getUsers(limit, page, query, sort);
-    console.log(users);
     const docsDTO = users.docs.map((doc) => new ListUserDto(doc));
     users.docs = docsDTO;
-    console.log(docsDTO);
     res.status(200).send(users);
   } catch (err) {
     res.status(400).send(err);
@@ -60,9 +58,7 @@ const updateUserRoleById = async (req, res) => {
   const { role } = req.body;
   try {
     const result = await user.updateUserRoleById(id, role);
-    console.log(result);
     if ("error" in result) {
-      console.log(result.error);
       result.updatedUser = {
         message: result.message,
       };
@@ -136,11 +132,31 @@ const deleteInactivetUsers = async (req, res) => {
     res.status(500).send(error);
   }
 };
+const deleteUserById = async (req, res) => {
+  try {
+    const uid = req.params.uid;
+    const result = await user.deleteUserById(uid);
+    if ("error" in result) {
+      result.updatedUser = {
+        message: result.message,
+      };
+    } else {
+      result.message = {
+        type: "success",
+        title: "Actualización exitosa,",
+        text: "El usuario fue eliminado correctamente",
+        status: 200,
+      };
+    }
+    res.status(result.message.status).render("userRole", result);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
 const logout = async (req, res) => {
   try {
-    if (req.user.role !== "admin") {
+    if (req.user && req.user.role !== "admin") {
       const result = await user.logout(req.user._id);
-      console.log(result);
     }
     res.clearCookie(config.JWT_COOKIE).redirect("login");
   } catch (err) {
@@ -157,4 +173,5 @@ export default {
   ulploadFiles,
   deleteInactivetUsers,
   logout,
+  deleteUserById,
 };

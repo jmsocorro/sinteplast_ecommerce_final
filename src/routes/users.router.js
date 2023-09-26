@@ -202,18 +202,26 @@ router.post(
   uploader.any(),
   userController.ulploadFiles
 );
-router.get(
-  "logout",
+router.post(
+  "/api/users/:uid/delete",
   passportAuthenticateApi("jwt"),
   (req, res, next) => {
     if (!req.user) {
       res.status(400).send({
         error: "No existe una sesión de usuario activa",
       });
+    } else if (req.user.role !== "admin") {
+      res.status(401).send({
+        error: "No esta autorizado para editar Usuarios",
+      });
     } else {
       next("route");
     }
   }
+);
+router.post(
+  "/api/users/:uid/delete",
+  userController.deleteUserById
 );
 router.get("/logout", userController.logout);
 router.get("/failureregister", (req, res) => {

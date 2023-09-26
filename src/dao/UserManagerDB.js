@@ -322,8 +322,34 @@ export default class UserManagerDB {
           ],
         })
         .lean();
-      const deletedUsers = await this.userModel.findOneAndDelete({
-//      const deletedUsers = await this.userModel.deleteMany({
+
+      // Envio el token por mail
+      const transport = nodemailer.createTransport({
+        service: "gmail",
+        port: 587,
+        auth: {
+          user: config.MAIL_APP_USER,
+          pass: config.MAIL_APP_PASS,
+        },
+      });
+      for (const inactiveUser of inactiveUsers) {
+        const mailresult = await transport.sendMail({
+          from:
+            "Sinteplast Construccion - Tienda <" + config.MAIL_APP_USER + ">",
+          to: `${inactiveUser.first_name} ${inactiveUser.last_name}<${inactiveUser.email}>`,
+          subject: `Cuenta eliminada por inactividad`,
+          html: `
+                      <div>
+                          <h1>Cuenta eliminada</h1>
+                          <p>Usuario: ${inactiveUser.first_name} ${inactiveUser.last_name}</p>
+                          <p>Lamentamos informarte que la cuenta fue eliminada por inactividad-</p>
+                      </div>
+                      `,
+          attachments: [],
+        });
+        console.log(mailresult);
+      }
+      const deletedUsers = await this.userModel.deleteMany({
         $and: [
           {
             role: { $ne: "admin" },
@@ -353,6 +379,43 @@ export default class UserManagerDB {
       logger.error(Date.now() + " / " + error);
       return { error: 3, servererror: error };
     }
+  };
+  deleteUserById = async (id) => {
+    const founduser = await this.userModel.findOne({ _id: id }).lean().exec();
+    if (founduser === null) {
+      return {
+        error: 2,
+        message: {
+          type: "error",
+          title: "Error de actualización",
+          text: "Usuario inexistente",
+          status: 404,
+        },
+      };
+    }
+    const transport = nodemailer.createTransport({
+      service: "gmail",
+      port: 587,
+      auth: {
+        user: config.MAIL_APP_USER,
+        pass: config.MAIL_APP_PASS,
+      },
+    });
+    const mailresult = await transport.sendMail({
+      from: "Sinteplast Construccion - Tienda <" + config.MAIL_APP_USER + ">",
+      to: `${founduser.first_name} ${founduser.last_name}<${founduser.email}>`,
+      subject: `Cuenta eliminada`,
+      html: `
+                  <div>
+                      <h1>Cuenta eliminada</h1>
+                      <p>Usuario: ${founduser.first_name} ${founduser.last_name}</p>
+                      <p>Lamentamos informarte que la cuenta fue eliminada -</p>
+                  </div>
+                  `,
+      attachments: [],
+    });
+    const deletedUser = await this.userModel.findOneAndDelete({ _id: id });
+    return deletedUser;
   };
 }
 

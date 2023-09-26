@@ -23,4 +23,5 @@ export default {
   TWILIO_AT: process.env.TWILIO_AT,
   TWILIO_PH: process.env.TWILIO_PH,
   ENVIROMENT: process.env.ENVIROMENT,
+  PORT: process.env.PORT || 8080,
 };

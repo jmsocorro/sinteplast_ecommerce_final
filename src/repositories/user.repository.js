@@ -25,7 +25,6 @@ export default class UserRepository {
   };
   updateUserRoleById = async (id, role) => {
     const result = await this.userDao.updateUserRoleById(id, role);
-    console.log(result);
     return result;
   };
   updateUserDocsById = async (id, status) => {
@@ -40,9 +39,10 @@ export default class UserRepository {
   deleteInactivetUsers = async () => {
     return await this.userDao.deleteInactivetUsers();
   }
+  deleteUserById = async (id) => {
+    return await this.userDao.deleteUserById(id)
+  }
   logout = async (id) => {
-    console.log('repository')
-    console.log(id)
     return await this.userDao.updateUserLastConnectionById(id)
   }
 }

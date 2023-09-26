@@ -78,7 +78,10 @@ export default class ProductManagerDB {
   };
   getProductById = async (id) => {
     try {
-      const foundprod = await this.productModel.findOne({ _id: id }).lean().exec();
+      const foundprod = await this.productModel
+        .findOne({ _id: id })
+        .lean()
+        .exec();
       return foundprod;
     } catch (error) {
       return { error: 3, servererror: error };
@@ -231,6 +234,30 @@ export default class ProductManagerDB {
       if (found === null) {
         return { error: 2, errortxt: "el producto no existe" };
       } else {
+        if (found.owner && found.owner !== "admin") {
+          const transport = nodemailer.createTransport({
+            service: "gmail",
+            port: 587,
+            auth: {
+              user: config.MAIL_APP_USER,
+              pass: config.MAIL_APP_PASS,
+            },
+          });
+          const mailresult = await transport.sendMail({
+            from:
+              "Sinteplast Construccion - Tienda <" + config.MAIL_APP_USER + ">",
+            to: `${found.owner}`,
+            subject: `Producto eliminado`,
+            html: `
+                        <div>
+                            <h1>Producto eliminado</h1>
+                            <p>Producto: ${founduser.title}</p>
+                            <p>Lamentamos informarte que el producto fue eliminado -</p>
+                        </div>
+                        `,
+            attachments: [],
+          });
+        }
         const deletedProd = await this.productModel.deleteOne({
           _id: id,
         });
